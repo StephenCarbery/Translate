@@ -95,7 +95,7 @@
 				TargetAttributes = {
 					FFD2F9B21BD1101A00F54057 = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = 3H68RG2SRC;
+						DevelopmentTeam = 9VY3A6E5LE;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -255,10 +255,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 3H68RG2SRC;
+				DEVELOPMENT_TEAM = 9VY3A6E5LE;
 				INFOPLIST_FILE = Translate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ie.wit.Translate;
+				PRODUCT_BUNDLE_IDENTIFIER = "ie.wit-SCarberyTranslate";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -268,10 +268,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 3H68RG2SRC;
+				DEVELOPMENT_TEAM = 9VY3A6E5LE;
 				INFOPLIST_FILE = Translate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ie.wit.Translate;
+				PRODUCT_BUNDLE_IDENTIFIER = "ie.wit-SCarberyTranslate";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

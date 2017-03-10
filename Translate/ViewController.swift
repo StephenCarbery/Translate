@@ -8,14 +8,18 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class ViewController: UIViewController, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var textToTranslate: UITextView!
     @IBOutlet weak var translatedText: UITextView!
     @IBOutlet weak var selectLanguage: UIPickerView!
+    @IBOutlet weak var destLangImageView: UIImageView!
+    @IBOutlet weak var langText: UITextView!
     
     let langPicker = ["French", "Spanish", "German"]
     var langSelect = ""
+    
+    
     
     
     //var data = NSMutableData()
@@ -37,6 +41,18 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         langSelect = langPicker[row]
+        self.langText.text = langSelect
+        switch langSelect {
+        case "French" :
+            destLangImageView.image = UIImage(named: "France-96")
+        case "German" :
+            destLangImageView.image = UIImage(named: "Germany-96")
+        case "Spanish" :
+            destLangImageView.image = UIImage(named: "Spain 2-96")
+        default :
+            destLangImageView.image = UIImage(named: "France-96")
+        }
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,12 +64,16 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        textToTranslate.delegate = self
         self.selectLanguage.delegate = self
         self.selectLanguage.dataSource = self
         
     }
     
-       
+    func textViewDidBeginEditing(_ textView: UITextView){
+        textToTranslate.text = ""
+    }
+    
     
     @IBAction func translate(_ sender: AnyObject) {
         
@@ -78,21 +98,25 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         let request = URLRequest(url: url!)// Creating Http Request
         
+        let session = URLSession(configuration: URLSessionConfiguration.default)
         //var data = NSMutableData()var data = NSMutableData()
         
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         indicator.center = view.center
         view.addSubview(indicator)
         indicator.startAnimating()
         
         var result = "<Translation Error>"
         
-        NSURLConnection.sendAsynchronousRequest(request, queue: OperationQueue.main) { response, data, error in
+        
+        
+        
+        //NSURLConnection.sendAsynchronousRequest(request, queue: OperationQueue.main) 
+            let task = session.dataTask(with: request){ data, response, error in
             
-            indicator.stopAnimating()
             
-            if let httpResponse = response as? HTTPURLResponse {
-                if(httpResponse.statusCode == 200){
+                if let httpResponse = response as? HTTPURLResponse {
+                    if(httpResponse.statusCode == 200){
                     
                     let jsonDict: NSDictionary!=(try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)) as! NSDictionary
                     
@@ -102,11 +126,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                         result = responseData.object(forKey: "translatedText") as! String
                     }
                 }
-                
+            }
+            DispatchQueue.main.async{
                 self.translatedText.text = result
+                indicator.stopAnimating()
+
             }
         }
-        
+        task.resume()
     }
 }
 
